@@ -10,7 +10,8 @@ variables:
   buildConfiguration: 'Release'
 
 pool:
-  vmImage: ubuntu-latest
+  #vmImage: ubuntu-latest
+  name: Default
 
 steps:
 #- task: DotNetCoreCLI@2
@@ -39,18 +40,26 @@ steps:
     Dockerfile: '**/Dockerfile'
     tags: |
       $(Build.BuildId)
-- task: Bash@3
+  displayName: Build Docker image
+#- task: Bash@3
+#  inputs:
+#    targetType: 'inline'
+#    script: 'docker run -d -p 9082:80 --name FastCarzApi fastcarzapi:$(Build.BuildId)'
+- task: PowerShell@2
+  displayName: Run a container
   inputs:
     targetType: 'inline'
-    script: 'docker run -d -p 9082:80 --name FastCarzApi fastcarzapi:$(Build.BuildId)'
-
+    script: |
+      docker run -d -p 9082:80 --name FastCarzApi fastcarzapi:$(Build.BuildId)
 #- task: Bash@3
 #  inputs:
 #    targetType: 'inline'
 #    script: 'curl http://localhost:9082/WeatherForecast'
 
-- task: Bash@3
+- task: PowerShell@2
+  displayName: Remove container
   inputs:
     targetType: 'inline'
-    script: 'docker rm -f FastCarzApi'
+    script: |
+     docker rm -f FastCarzApi
   condition: always()
