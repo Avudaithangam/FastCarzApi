@@ -57,6 +57,13 @@ steps:
 #    script: 'curl http://localhost:9082/WeatherForecast'
 
 - task: PowerShell@2
+  displayName: Check endpoint
+  inputs:
+    targetType: 'inline'
+    script: |
+      curl http://localhost:9082/WeatherForecast
+
+- task: PowerShell@2
   displayName: Remove container
   inputs:
     targetType: 'inline'
