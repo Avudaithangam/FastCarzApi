@@ -17,10 +17,17 @@ steps:
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
-    zipAfterPublish: True
-  displayName: 'Build $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+  displayName: 'Build $(buildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+  displayName: 'Publish $(buildConfiguration)'
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'FastCarzApi'
+  displayName: Publish pipeline artifacts
