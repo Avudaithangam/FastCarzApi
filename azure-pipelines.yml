@@ -61,7 +61,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      curl http://localhost:9082/WeatherForecast
+      Invoke-RestMethod -uri http://localhost:9082/WeatherForecast
 
 - task: PowerShell@2
   displayName: Remove container
