@@ -31,3 +31,8 @@ steps:
     targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'FastCarzApi'
   displayName: Publish pipeline artifacts
+
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
