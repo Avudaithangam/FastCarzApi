@@ -17,6 +17,7 @@ steps:
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
+    zipAfterPublish: True
   displayName: 'Build $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
 - task: PublishPipelineArtifact@1
