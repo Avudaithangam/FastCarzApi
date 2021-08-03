@@ -6,13 +6,20 @@
 trigger:
 - master
 
+variables:
+  buildConfiguration: 'Release'
+
 pool:
   vmImage: ubuntu-latest
 
 steps:
-
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+  displayName: 'Build $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'FastCarzApi'
