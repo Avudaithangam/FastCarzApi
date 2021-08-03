@@ -13,11 +13,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'Build $(buildConfiguration)'
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: 'build'
+#    arguments: '--configuration $(buildConfiguration)'
+#  displayName: 'Build $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -44,12 +44,13 @@ steps:
     targetType: 'inline'
     script: 'docker run -d -p 9082:80 --name FastCarzApi fastcarzapi:$(Build.BuildId)'
 
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'curl http://localhost:9082/WeatherForecast'
+#- task: Bash@3
+#  inputs:
+#    targetType: 'inline'
+#    script: 'curl http://localhost:9082/WeatherForecast'
 
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: 'docker rm -f FastCarzApi'
+  condition: always()
